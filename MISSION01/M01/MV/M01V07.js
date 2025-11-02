@@ -22,9 +22,9 @@ const secondUserList = secondArray.map((number) => {
 const st = performance.now("brutForce");
 const user = secondUserList.find((user) => user.userId === 9999);
 const ed = performance.now("brutForce");
-console.log(ed - st);
+console.log(ed - st, "ms");
 
 const start = performance.now("efc");
 const use = secondUserList[9999];
 const end = performance.now("efc");
-console.log(end - start);
+console.log(end - start, "ms");
