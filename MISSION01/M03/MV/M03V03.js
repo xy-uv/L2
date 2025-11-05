@@ -38,3 +38,5 @@ const stack = new Stack();
 stack.push(2).push(3).push(4);
 stack.print().push(5);
 console.log(stack.peek());
+stack.print().pop();
+stack.print();
