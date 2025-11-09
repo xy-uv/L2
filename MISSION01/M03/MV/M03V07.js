@@ -74,7 +74,31 @@ class LinkedList {
     return this;
   }
 
-  remove() {}
+  remove(index) {
+    if (index === 0) {
+      const removedItem = this.head.value;
+      this.head = this.head.next;
+
+      if (this.length === 1) {
+        this.tail = null;
+      }
+
+      this.length--;
+      return removedItem;
+    }
+
+    const leadingNode = this._traverseToIndex(index - 1);
+    const nodeToRemove = leadingNode.next;
+
+    leadingNode.next = nodeToRemove.next;
+
+    if (leadingNode.next === null) {
+      this.tail = leadingNode;
+    }
+
+    this.length--;
+    return this;
+  }
 
   _traverseToIndex(index) {
     let count = 0;
