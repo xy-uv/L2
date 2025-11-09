@@ -30,9 +30,29 @@ class LinkedList {
     return this;
   }
 
-  prepend() {}
+  prepend(value) {
+    const node = new Node(value);
+    //? If the linked list is empty
+    if (this.head === null && this.length === 0) {
+      this.head = node;
+      this.tail = node;
+    } else {
+      //? If the list is't empty
+      node.next = this.head;
+      this.head = node;
+    }
 
-  insert() {}
+    this.length++;
+
+    return this;
+  }
+
+  insert(index, value) {
+    if (index < 0 || index > this.length) {
+      console.error("Index out of bound");
+      return undefined;
+    }
+  }
 
   remove() {}
 
