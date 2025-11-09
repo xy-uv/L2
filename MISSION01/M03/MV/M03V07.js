@@ -1,7 +1,7 @@
 class Node {
   constructor(value) {
     this.value = value;
-    this.next = next;
+    this.next = null;
   }
 }
 
@@ -52,18 +52,56 @@ class LinkedList {
       console.error("Index out of bound");
       return undefined;
     }
+    //? If inserting on first of Linked List
+    if (index === 0) {
+      return this.prepend(value);
+    }
+    //? If inserting on last of linked list
+    if (index === this.length) {
+      return this.append(value);
+    }
+
+    const leadingNode = this._traverseToIndex(index - 1);
+    const holdingNode = leadingNode.next;
+
+    const node = new Node(value);
+
+    leadingNode.next = node;
+    node.next = holdingNode;
+
+    this.length++;
+
+    return this;
   }
 
   remove() {}
 
+  _traverseToIndex(index) {
+    let count = 0;
+    let currentNode = this.head;
+
+    while (count !== index) {
+      currentNode = currentNode.next;
+      count++;
+    }
+    return currentNode;
+  }
+
   print() {
     const arr = [];
+    let currentNode = this.head;
 
-    const currentNode = this.head;
     while (currentNode !== null) {
-      arr.push(currentNode);
+      arr.push(currentNode.value);
       currentNode = currentNode.next;
     }
-    console.log(arr.join(" -> "), " -> null ");
+
+    console.log(arr.join(" -> "), "-> null ");
   }
 }
+
+const linkedList = new LinkedList()
+  .append("C")
+  .prepend("A")
+  .insert(1, "B")
+  .print();
