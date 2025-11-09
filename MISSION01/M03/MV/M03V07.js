@@ -121,6 +121,7 @@ class LinkedList {
     }
 
     console.log(arr.join(" -> "), "-> null ");
+    return this;
   }
 }
 
@@ -128,4 +129,7 @@ const linkedList = new LinkedList()
   .append("C")
   .prepend("A")
   .insert(1, "B")
-  .print();
+  .print()
+  .remove(2);
+
+linkedList.print();
