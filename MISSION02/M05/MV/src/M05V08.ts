@@ -13,6 +13,7 @@ const userInfo = { ...user, ...otherInfo };
 
 console.log(userInfo);
 
+//Rest Operator
 const sendInvite = (...gfs: string[]) => {
   gfs.forEach((fr) => console.log(`Sending invite to ${fr}`));
 };
