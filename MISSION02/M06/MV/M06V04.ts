@@ -43,3 +43,15 @@ const user: TUser = {
 const getPropertyFromObj = <X>(obj: X, key: keyof X) => {
   return obj[key];
 };
+
+const product = {
+  brand: "HP",
+};
+
+const student = {
+  id: 123,
+  class: "four",
+};
+
+const result2 = getPropertyFromObj(product, "brand");
+const result3 = getPropertyFromObj(student, "id");
