@@ -1,23 +1,25 @@
-const path = require("path");
+const fs = require("fs");
 
-console.log("Current file Info: \n");
-console.log("filename: ", __filename);
-console.log("Directory: ", __dirname);
+//! Writing File
+//* Create file using WriteFileSync-> Synchronously
+const contentForSync =
+  "This is a large content\nWe are exploring nodejs file system fs module";
 
-console.log("\n" + "-".repeat(50) + "\n");
+try {
+  fs.writeFileSync("./MISSION03/M10/OUT/write-sync.txt", contentForSync);
+  console.log("File created by Synchronously!!");
+} catch (error) {
+  console.error("ERROR Happened: ", error.message);
+}
 
-const filePath = "/shahriar/l2/docs/nextLevel.pdf";
+//* Create file by WriteFile-> Asynchronously
+const contentForAsync =
+  "This is a large content for\nAsynchronous task exploring";
 
-console.log("analyzing Path :", filePath, "\n");
-console.log("Directory: ", path.dirname(filePath));
-console.log("Base name: ", path.basename(filePath));
-console.log("File Extension: ", path.extname(filePath));
-console.log("File Name: ", path.basename(filePath, path.extname(filePath)));
-
-console.log("\n" + "-".repeat(50) + "\n");
-
-const parsed = path.parse(filePath);
-console.log("Parsed path object: ", parsed);
-console.log("\n" + "-".repeat(50) + "\n");
-
-console.log("formatted path: ", path.format(parsed));
+fs.writeFile("./MISSION03/M10/OUT/write-async.txt", contentForAsync, (err) => {
+  if (err) {
+    console.error("ERROR Happened: ", err.message);
+  } else {
+    console.log("File created successfully by Asynchronous!!");
+  }
+});
