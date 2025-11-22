@@ -1,0 +1,15 @@
+{
+  "uid": "U-MISSION03-M10-USER",
+  "name": "PlayerOne",
+  "level": 5,
+  "experience": 1200,
+  "inventory": [
+    { "item_id": "sword_001", "quantity": 1 },
+    { "item_id": "potion_002", "quantity": 5 }
+  ],
+  "settings": {
+    "audio_volume": 80,
+    "graphics_quality": "high",
+    "control_scheme": "default"
+  }
+}
