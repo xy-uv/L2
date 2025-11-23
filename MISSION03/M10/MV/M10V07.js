@@ -10,6 +10,8 @@ console.log("OS type: ", os.type());
 console.log("OS Release: ", os.release());
 console.log("Hostname: ", os.hostname());
 
+console.log("-".repeat(50));
+
 console.log("\nCPU info : ");
 const cpus = os.cpus();
 console.log("CPU Model : ", cpus[0].model);
