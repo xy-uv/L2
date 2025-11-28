@@ -1,3 +1,4 @@
+import { readUser, writeUser } from "../helpers/dbs";
 import parser from "../helpers/parser";
 import response from "../helpers/response";
 import router from "../helpers/route_handler";
@@ -20,6 +21,13 @@ router("GET", "/health", (_req, res) => {
 
 router("POST", "/api/users", async (req, res) => {
   const body = await parser(req);
+  const users = readUser();
+  const user = { ...body };
+
+  users?.push(user);
+
+  writeUser(users);
+
   response(res, 201, {
     success: true,
     response: "ok",
