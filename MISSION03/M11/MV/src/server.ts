@@ -1,6 +1,7 @@
 import http, { IncomingMessage, Server, ServerResponse } from "http";
 import variable from "./config";
 import { routes, TRouteHandler } from "./helpers/route_handler";
+import "./routes";
 
 const server: Server = http.createServer(
   (req: IncomingMessage, res: ServerResponse) => {
