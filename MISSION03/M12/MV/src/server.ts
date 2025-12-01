@@ -117,6 +117,38 @@ app.get("/users/:id", async (req: Request, res: Response) => {
   }
 });
 
+app.put("/users/:id", async (req: Request, res: Response) => {
+  const { name, email, age, phone, address } = req.body;
+  try {
+    const result = await pool.query(
+      `
+      UPDATE users SET name=$1,email=$2,age=$3,phone=$4,address=$5 WHERE id=$6 RETURNING *  
+      `,
+      [name, email, age, phone, address, req.params.id]
+    );
+    if (result.rows.length === 0) {
+      res.status(404).json({
+        success: false,
+        response: "wrong",
+        message: "User not found",
+      });
+    } else {
+      res.status(201).json({
+        success: true,
+        response: "ok",
+        message: "User updated successfully",
+        data: result.rows[0],
+      });
+    }
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      response: "wrong",
+      message: error?.message,
+    });
+  }
+});
+
 app.get("/", (_req: Request, res: Response) => {
   res.status(200).json({
     success: true,
