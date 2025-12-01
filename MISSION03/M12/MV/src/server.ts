@@ -117,7 +117,7 @@ app.get("/users/:id", async (req: Request, res: Response) => {
   }
 });
 
-app.put("/users/:id", async (req: Request, res: Response) => {
+app.patch("/users/:id", async (req: Request, res: Response) => {
   const { name, email, age, phone, address } = req.body;
   try {
     const result = await pool.query(
