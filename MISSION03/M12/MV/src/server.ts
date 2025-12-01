@@ -20,7 +20,7 @@ const pool = new Pool({ connectionString: variables.connection_string });
         name VARCHAR(55) NOT NULL,
         email VARCHAR(85) UNIQUE NOT NULL,
         age INT,
-        phone VARCHAR(15),
+        phone VARCHAR(15) UNIQUE,
         address TEXT,
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW()
@@ -40,6 +40,31 @@ const pool = new Pool({ connectionString: variables.connection_string });
     )
     `);
 })();
+
+//! USERS CRUD
+app.post("/users", async (req: Request, res: Response) => {
+  const { name, email, age, phone, address } = req.body;
+  try {
+    const result = await pool.query(
+      `
+    INSERT INTO users(name,email,age,phone,address) VALUES($1,$2,$3,$4,$5) RETURNING *
+    `,
+      [name, email, age, phone, address]
+    );
+    res.status(201).json({
+      success: true,
+      response: "ok",
+      message: "Data inserted successfully!!",
+      data: result.rows[0],
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      response: "wrong",
+      message: error?.message,
+    });
+  }
+});
 
 app.get("/", (_req: Request, res: Response) => {
   console.log("bal");
