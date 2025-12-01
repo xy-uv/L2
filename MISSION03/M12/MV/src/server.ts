@@ -86,6 +86,37 @@ app.get("/users", async (_req: Request, res: Response) => {
   }
 });
 
+app.get("/users/:id", async (req: Request, res: Response) => {
+  try {
+    const result = await pool.query(
+      `
+      SELECT * FROM users WHERE id=$1
+      `,
+      [req.params.id]
+    );
+    if (result.rows.length > 0) {
+      res.status(200).json({
+        success: true,
+        response: "ok",
+        message: "Data retrieve successfully!!",
+        data: result.rows[0],
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        response: "wrong",
+        message: "User not found",
+      });
+    }
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      response: "wrong",
+      message: error?.message,
+    });
+  }
+});
+
 app.get("/", (_req: Request, res: Response) => {
   res.status(200).json({
     success: true,
