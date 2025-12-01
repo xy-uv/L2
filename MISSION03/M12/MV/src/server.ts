@@ -66,8 +66,27 @@ app.post("/users", async (req: Request, res: Response) => {
   }
 });
 
+app.get("/users", async (_req: Request, res: Response) => {
+  try {
+    const result = await pool.query(`
+    SELECT * FROM users
+    `);
+    res.status(200).json({
+      success: true,
+      response: "ok",
+      message: "Users retrieve successfully!!",
+      data: result.rows,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      response: "wrong",
+      message: error?.message,
+    });
+  }
+});
+
 app.get("/", (_req: Request, res: Response) => {
-  console.log("bal");
   res.status(200).json({
     success: true,
     response: "ok",
