@@ -10,6 +10,8 @@ const dbConnection = async () => {
         id SERIAL PRIMARY KEY,
         name VARCHAR(55) NOT NULL,
         email VARCHAR(85) UNIQUE NOT NULL,
+        role VARCHAR(11) NOT NULL,
+        password TEXT NOT NULL,
         age INT,
         phone VARCHAR(15) UNIQUE,
         address TEXT,
