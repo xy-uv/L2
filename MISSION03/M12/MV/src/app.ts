@@ -15,36 +15,6 @@ dbConnection();
 //! Calling routes
 app.use("/api/v1", router);
 
-//! USERS CRUD
-
-app.delete("/users/:id", async (req: Request, res: Response) => {
-  try {
-    const result = await pool.query(
-      `
-    DELETE FROM users WHERE id=$1`,
-      [req.params.id]
-    );
-    if (result.rowCount === 0) {
-      res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    } else {
-      res.status(200).json({
-        success: true,
-        message: "User deleted successfully",
-        data: result.rows,
-      });
-    }
-  } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      response: "wrong",
-      message: error?.message,
-    });
-  }
-});
-
 //! TODOS
 app.post("/todos", async (req: Request, res: Response) => {
   const { uid, title, description, due_date } = req.body;
