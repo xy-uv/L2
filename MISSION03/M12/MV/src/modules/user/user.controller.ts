@@ -90,4 +90,28 @@ const update = async (req: Request, res: Response) => {
   }
 };
 
-export const UserControllers = { create, read, single, update };
+const remove = async (req: Request, res: Response) => {
+  try {
+    const result = await UserServices.remove(req.params.id!);
+    if (result.rowCount === 0) {
+      res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "User deleted successfully",
+        data: result.rows,
+      });
+    }
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      response: "wrong",
+      message: error?.message,
+    });
+  }
+};
+
+export const UserControllers = { create, read, single, update, remove };
