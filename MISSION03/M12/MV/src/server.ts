@@ -177,6 +177,34 @@ app.delete("/users/:id", async (req: Request, res: Response) => {
   }
 });
 
+//! TODOS
+app.post("/todos", async (req: Request, res: Response) => {
+  const { uid, title, description, due_date } = req.body;
+  try {
+    const result = await pool.query(
+      `INSERT INTO todos(uid,title,description,due_date) VALUES($1,$2,$3,$4) RETURNING *`,
+      [uid, title, description, due_date]
+    );
+    res.status(201).json({
+      success: true,
+      response: "ok",
+      message: "Data inserted successfully!!",
+      data: result.rows[0],
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      response: "wrong",
+      message: error.message,
+    });
+  }
+});
+
+app.get("/todos", async (req: Request, res: Response) => {
+  try {
+  } catch (error) {}
+});
+
 app.get("/", (_req: Request, res: Response) => {
   res.status(200).json({
     success: true,
