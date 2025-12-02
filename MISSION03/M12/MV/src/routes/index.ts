@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { UserRouter } from "../modules/user/user.routes";
 import { TodoRouter } from "../modules/todo/todo.route";
+import { AuthRouter } from "../modules/auth/auth.route";
 
 const router = Router();
 
@@ -14,6 +15,10 @@ const modules: IModuleRouter[] = [
   {
     path: "/todos",
     route: TodoRouter,
+  },
+  {
+    path: "/auth",
+    route: AuthRouter,
   },
 ];
 
