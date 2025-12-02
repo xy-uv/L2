@@ -63,4 +63,31 @@ const single = async (req: Request, res: Response) => {
   }
 };
 
-export const UserControllers = { create, read, single };
+const update = async (req: Request, res: Response) => {
+  const { name, email, age, phone, address } = req.body;
+  try {
+    const result = await UserServices.update(req.body, req.params.id!);
+    if (result.rows.length === 0) {
+      res.status(404).json({
+        success: false,
+        response: "wrong",
+        message: "User not found",
+      });
+    } else {
+      res.status(201).json({
+        success: true,
+        response: "ok",
+        message: "User updated successfully",
+        data: result.rows[0],
+      });
+    }
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      response: "wrong",
+      message: error?.message,
+    });
+  }
+};
+
+export const UserControllers = { create, read, single, update };

@@ -18,4 +18,14 @@ const single = async (id: string) => {
   return await pool.query(` SELECT * FROM users WHERE id=$1 `, [id]);
 };
 
-export const UserServices = { create, read, single };
+const update = async (data: any, id: string) => {
+  const { name, email, age, phone, address } = data;
+
+  const result = await pool.query(
+    `UPDATE users SET name=$1,email=$2,age=$3,phone=$4,address=$5 WHERE id=$6 RETURNING * `,
+    [name, email, age, phone, address, id]
+  );
+  return result;
+};
+
+export const UserServices = { create, read, single, update };
