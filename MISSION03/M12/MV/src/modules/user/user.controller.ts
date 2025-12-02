@@ -1,9 +1,9 @@
 import { Application, Request, Response } from "express";
 import { UserServices } from "./user.service";
 
-const create = async (req: Request, res: Response) => {
+const insert = async (req: Request, res: Response) => {
   try {
-    const result = await UserServices.create(req.body);
+    const result = await UserServices.insert(req.body);
     res.status(201).json({
       success: true,
       response: "ok",
@@ -114,4 +114,4 @@ const remove = async (req: Request, res: Response) => {
   }
 };
 
-export const UserControllers = { create, read, single, update, remove };
+export const UserControllers = { insert, read, single, update, remove };
