@@ -4,6 +4,7 @@ import { toNodeHandler } from "better-auth/node";
 import authentic from "./middlewares/auth";
 import { auth } from "./lib/auth";
 import { Role } from "./const/auth.constrain";
+import { PostRouter } from "./modules/post/post.router";
 
 const app: Application = express();
 app.use(
@@ -15,6 +16,8 @@ app.use(
 app.use(express.json());
 
 app.all("/api/auth/*splat", toNodeHandler(auth));
+
+app.use("/api/v1", PostRouter);
 
 app.get(
   "/",
