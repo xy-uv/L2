@@ -1,19 +1,12 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "PostStatus" AS ENUM ('DRAFT', 'PUBLISHED', 'ARCHIVED');
 
-  - You are about to drop the `Comment` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Post` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE "Comment";
-
--- DropTable
-DROP TABLE "Post";
+-- CreateEnum
+CREATE TYPE "CommentStatus" AS ENUM ('APPROVED', 'REJECT');
 
 -- CreateTable
-CREATE TABLE "post" (
-    "id" UUID NOT NULL,
+CREATE TABLE "posts" (
+    "id" TEXT NOT NULL,
     "title" VARCHAR(225) NOT NULL,
     "content" TEXT NOT NULL,
     "thumbnail" TEXT,
@@ -22,24 +15,24 @@ CREATE TABLE "post" (
     "tags" TEXT[],
     "views" INTEGER NOT NULL DEFAULT 0,
     "authorId" TEXT NOT NULL,
-    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "post_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "posts_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "comment" (
+CREATE TABLE "comments" (
     "id" TEXT NOT NULL,
     "content" TEXT NOT NULL,
     "authorId" TEXT NOT NULL,
     "postId" TEXT NOT NULL,
-    "parentId" TEXT NOT NULL,
+    "parentId" TEXT,
     "status" "CommentStatus" NOT NULL DEFAULT 'APPROVED',
-    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "comment_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "comments_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -104,10 +97,13 @@ CREATE TABLE "verification" (
 );
 
 -- CreateIndex
-CREATE INDEX "post_authorId_idx" ON "post"("authorId");
+CREATE INDEX "posts_authorId_idx" ON "posts"("authorId");
 
 -- CreateIndex
-CREATE INDEX "comment_authorId_postId_idx" ON "comment"("authorId", "postId");
+CREATE INDEX "comments_postId_idx" ON "comments"("postId");
+
+-- CreateIndex
+CREATE INDEX "comments_authorId_idx" ON "comments"("authorId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
@@ -123,6 +119,12 @@ CREATE INDEX "account_userId_idx" ON "account"("userId");
 
 -- CreateIndex
 CREATE INDEX "verification_identifier_idx" ON "verification"("identifier");
+
+-- AddForeignKey
+ALTER TABLE "comments" ADD CONSTRAINT "comments_postId_fkey" FOREIGN KEY ("postId") REFERENCES "posts"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "comments" ADD CONSTRAINT "comments_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "comments"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "session" ADD CONSTRAINT "session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
