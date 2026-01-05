@@ -5,6 +5,8 @@ import { PostController } from "./post.controller";
 
 const router = Router();
 
+router.get("/post", PostController.retrieves);
+
 router.post("/post", auth(Role.user), PostController.insert);
 
 export const PostRouter: Router = router;

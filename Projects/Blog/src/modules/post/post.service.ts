@@ -14,4 +14,9 @@ const insert = async (
   return result;
 };
 
-export const PostServices = { insert };
+const retrieves = async () => {
+  const result = await prisma.post.findMany();
+  return result;
+};
+
+export const PostServices = { insert, retrieves };
