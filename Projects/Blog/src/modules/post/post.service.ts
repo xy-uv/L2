@@ -21,12 +21,22 @@ const retrieves = async ({
   isFeatured,
   status,
   authorId,
+  page,
+  limit,
+  skip,
+  sortBy,
+  sortOrder,
 }: {
   search: string | undefined;
   tags: string[] | [];
   isFeatured: boolean | undefined;
   status: PostStatus | undefined;
   authorId: string | undefined;
+  page: number;
+  limit: number;
+  skip: number;
+  sortBy: string;
+  sortOrder: string;
 }) => {
   const andConditions: PostWhereInput[] = [];
 
