@@ -65,4 +65,17 @@ const retrieves = async (req: Request, res: Response) => {
   }
 };
 
-export const PostController = { insert, retrieves };
+const retrieve = async (req: Request, res: Response) => {
+  try {
+    const result = await PostServices.retrieve(req.params.postId!);
+
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({
+      error: "Post creation failed",
+      details: error,
+    });
+  }
+};
+
+export const PostController = { insert, retrieves, retrieve };

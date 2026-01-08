@@ -90,4 +90,22 @@ const retrieves = async ({
   return result;
 };
 
-export const PostServices = { insert, retrieves };
+const retrieve = async (id: string) => {
+  return await prisma.$transaction(async (trx) => {
+    await trx.post.update({
+      where: {
+        id,
+      },
+      data: {
+        views: {
+          increment: 1,
+        },
+      },
+    });
+    return trx.post.findUnique({
+      where: { id },
+    });
+  });
+};
+
+export const PostServices = { insert, retrieves, retrieve };
