@@ -5,6 +5,7 @@ import authentic from "./middlewares/auth";
 import { auth } from "./lib/auth";
 import { Role } from "./const/auth.constrain";
 import { PostRouter } from "./modules/post/post.router";
+import { commentRouter } from "./modules/comment/comment.router";
 
 const app: Application = express();
 app.use(
@@ -18,6 +19,7 @@ app.use(express.json());
 app.all("/api/auth/*splat", toNodeHandler(auth));
 
 app.use("/api/v1/posts", PostRouter);
+app.use("/api/v1/comments", commentRouter);
 
 app.get(
   "/",
