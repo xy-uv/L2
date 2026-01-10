@@ -20,7 +20,7 @@ export type PostStatus = (typeof PostStatus)[keyof typeof PostStatus]
 
 export const CommentStatus = {
   APPROVED: 'APPROVED',
-  REJECT: 'REJECT'
+  REJECTED: 'REJECTED'
 } as const
 
 export type CommentStatus = (typeof CommentStatus)[keyof typeof CommentStatus]

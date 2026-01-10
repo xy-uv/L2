@@ -109,10 +109,37 @@ const modify = async (
   });
 };
 
+const moderateComment = async (id: string) => {
+  const comment = await prisma.comment.findFirst({
+    where: {
+      id,
+    },
+  });
+
+  if (!comment) {
+    throw new Error("Something went wrong!");
+  }
+
+  let data: { status: CommentStatus } = { status: comment.status };
+
+  if (comment.status === CommentStatus.APPROVED) {
+    data.status = CommentStatus.REJECTED;
+  }
+
+  if (comment.status === CommentStatus.REJECTED) {
+    data.status = CommentStatus.APPROVED;
+  }
+  return await prisma.comment.update({
+    where: { id },
+    data,
+  });
+};
+
 export const CommentService = {
   insert,
   retrieve,
   retrieveByAuthor,
   destroy,
   modify,
+  moderateComment,
 };
